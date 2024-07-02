@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Lesson Detail{% endblock %}
+{% block content %}
+    <h1>{{ lesson.title }}</h1>
+    <p><strong>Subject:</strong> {{ lesson.subject }}</p>
+    <p><strong>Level:</strong> {{ lesson.level }}</p>
+    <p><strong>Content:</strong></p>
+    <p>{{ lesson.content }}</p>
+    <p><strong>Date Posted:</strong> {{ lesson.date_posted.strftime('%Y-%m-%d') }}</p>
+    <p><strong>Author:</strong> {{ lesson.author.username }}</p>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('routes.register_lesson', lesson_id=lesson.id) }}">Register for this Lesson</a>
+    {% endif %}
+{% endblock %}

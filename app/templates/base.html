@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}MyApp{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('routes.index') }}">Home</a></li>
+            <li><a href="{{ url_for('routes.about') }}">About</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('routes.new_lesson') }}">New Lesson</a></li>
+                <li><a href="{{ url_for('routes.logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('routes.register') }}">Register</a></li>
+                <li><a href="{{ url_for('routes.login') }}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+
